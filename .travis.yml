@@ -22,4 +22,4 @@ before_script:
   - sleep 15 # inject an artificial wait before making the first connection
 script:
   - yarn lint
-  - yarn test
+  - yarn test:coveralls
