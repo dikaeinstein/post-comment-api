@@ -1,0 +1,8 @@
+{
+	"watch": [
+		"src/",
+		".env"
+	],
+	"delay": 250,
+  "exec": "yarn dev | pino-pretty -t SYS:HH:MM:ss.l"
+}
