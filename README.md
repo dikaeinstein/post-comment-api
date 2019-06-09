@@ -5,7 +5,7 @@
 
 ## Overview
 
-This is my attempt at following Robert C. Martin's `The Clean Architecture` for a Node.js project. So the repo is less about any particular problem but more about the architecture. The imaginary problem is a simple article system that has posts and comments for a post.
+This is my attempt at following [Dev Mastery(Using Clean Architecture for Microservice APIs in Node.js with MongoDB and Express)](https://www.youtube.com/watch?v=CnailTcJV_U&t=1616s). This project adopts Robert C. Martin's `The Clean Architecture` for a Node.js project. So the repo is less about any particular problem but more about the architecture. The imaginary problem is a simple article system that has posts and comments for a post.
 
 ## Project Structure
 
@@ -24,7 +24,7 @@ git clone git@github.com:dikaeinstein/post-comment-api.git
 cd post-comment-api
 cp .env.sample .env
 yarn install
-yarn start or yarn watch to start in development mode
+yarn start or yarn watch // to start in development mode
 ```
 
 You should now be able to access the API via http://localhost:8050/api/v1 and perform basic CRUD actions.
