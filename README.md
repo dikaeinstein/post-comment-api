@@ -31,6 +31,10 @@ You should now be able to access the API via http://localhost:8050/api/v1 and pe
 
 **NOTE:** You may need to modify the `.env` file configuration if the defaults in are not suitable for your environment.
 
+## Debugging
+
+To debug using vscode with my current config(`launch.json`) just click on the `Debug` icon and start debugging. You can also debug your tests 😎. Just use the launch config you prefer.
+
 ## Available Commands
 
 The following commands can be used via `npm` or `yarn`:
