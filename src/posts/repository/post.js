@@ -1,45 +1,13 @@
 /**
- * @template T
- * @typedef {Object<Function, any>} Model Provides the interface to the data store.
- * @property {(doc, options?) => Promise<T>} create
- * @property {(condition, projection?, options?) => Promise<T[]>} find
- * @property {(condition, projection?, options?) => Promise<T>} findOne
- * @property {(condition, attrs, options?) => Promise<T>} findOneAndUpdate
- * @property {(condition, options?) => Promise<T>} findOneAndRemove
- */
-
-/**
- * @typedef {import('../post/post').Post & { hash: string }} Post
- */
-
-/**
- * @typedef {Object<Function,any>} DB The database connection
- * @property {(name: string, schema) => Model<Post>} model
- */
-
-/**
- * @typedef {import('mongoose').Schema} Schema
- */
-
-
-/**
- * Represents the Post data repository (knows a little implementation detail(Mongoose))
+ * Represents the Post data repository
  */
 class PostRepository {
   /**
    * @param {object} params
-   * @param {DB} params.db Database connection
-   * @param {Schema} [params.schema]
-   * @param {((schema: Schema) => void)[]} [params.plugins]
+   * @param {import('model').Model<import('post').Post>} params.model Post model
    */
-  constructor({ db, schema, plugins = [] }) {
-    if (schema && plugins) {
-      plugins.forEach((plugin) => {
-        schema.plugin(plugin);
-      });
-    }
-
-    this.model = db.model('Post', schema);
+  constructor({ model }) {
+    this.model = model;
   }
 
   /**
@@ -47,6 +15,7 @@ class PostRepository {
    * @param {*} query
    * @param {*} [projection]
    * @param {*} [options]
+   * @returns {Promise<import('post').Post[]>}
    */
   async findAll(query, projection, options) {
     return this.model.find(query, projection, options);
@@ -57,16 +26,18 @@ class PostRepository {
    * @param {string} id
    * @param {*} [projection]
    * @param {*} [options]
+   * @returns {Promise<import('post').Post>}
    */
   async findById(id, projection, options) {
     return this.model.findOne({ id }, projection, options);
   }
 
   /**
-   * Insert post(s) into db. postInfo can either be an array of documents or
-   * a single document. To specify options, docs must be an array.
+   * Insert post(s) into db. postInfo can either be an array of posts or
+   * a single post. To specify options, docs must be an array.
    * @param {*} postInfo
    * @param {*} [options]
+   * @returns {Promise<import('post').Post | import('post').Post[]>}
    */
   async insert(postInfo, options) {
     return this.model.create(postInfo, options);
@@ -77,6 +48,7 @@ class PostRepository {
    * @param {*} query
    * @param {*} postInfo
    * @param {*} [options]
+   * @returns {Promise<import('post').Post>}
    */
   async update(query, postInfo, options) {
     return this.model.findOneAndUpdate(query, postInfo, {
@@ -87,6 +59,7 @@ class PostRepository {
   /**
    * Remove a single post
    * @param {*} options
+   * @returns {Promise<import('post').Post>}
    */
   async remove(options) {
     const { id, ...others } = options;
@@ -96,6 +69,7 @@ class PostRepository {
   /**
    * Find post by hash
    * @param {string} hash
+   * @returns {Promise<import('post').Post>}
    */
   async findByHash(hash) {
     return this.model.findOne({ hash });

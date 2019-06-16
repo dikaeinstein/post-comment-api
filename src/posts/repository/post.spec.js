@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import md5 from 'src/common/utils/md5';
 import makeFakePost from '__test__/fixtures/post';
 import PostRepository from './post';
@@ -10,21 +10,11 @@ import postSchema from '../model/postSchema';
 let postRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  postRepository = new PostRepository({
-    db,
-    schema: postSchema,
-    plugins: [(schema) => {}],
-  });
+  const model = makeFakeModel('Post');
+  postRepository = new PostRepository({ model });
 });
 
 describe('PostRepository', () => {
-  it('initializes without plugins', () => {
-    const db = makeFakeDB();
-    const testPostRepository = new PostRepository({ db, schema: postSchema });
-    expect(testPostRepository).toBeInstanceOf(PostRepository);
-  });
-
   it('lists posts', async () => {
     const post1 = makeFakePost();
     const post2 = makeFakePost();
