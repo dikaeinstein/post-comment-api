@@ -1,10 +1,10 @@
 import assert from 'assert';
 
 import { makeDocumentNotFoundError } from 'src/common/errors';
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakePost from '__test__/fixtures/post';
 import PostRepository from '../repository/post';
-import makeViewSinglePost from './viewSinglePost';
+import makeGetSinglePost from './getSinglePost';
 
 
 /**
@@ -12,25 +12,26 @@ import makeViewSinglePost from './viewSinglePost';
  */
 let postRepository;
 beforeAll(() => {
-  const db = makeFakeDB();
-  postRepository = new PostRepository({ db });
+  const model = makeFakeModel('Post');
+  postRepository = new PostRepository({ model });
 });
 
 describe('viewSinglePost use case', () => {
   it('can retrieve a single post', async () => {
     const fakePost = makeFakePost();
-    const insertedPost = await postRepository.insert(fakePost);
+    const insertedPost = /** @type {import('post').Post} */ (await postRepository
+      .insert(fakePost));
 
-    const viewSinglePost = makeViewSinglePost({
+    const getSinglePost = makeGetSinglePost({
       postRepository, assert, makeDocumentNotFoundError,
     });
-    const post = await viewSinglePost(insertedPost.id);
+    const post = await getSinglePost(insertedPost.id);
 
     expect(post).toMatchObject(insertedPost);
   });
   it('handles non existent post', async () => {
     const fakePost = makeFakePost();
-    const viewSinglePost = makeViewSinglePost({
+    const viewSinglePost = makeGetSinglePost({
       postRepository, assert, makeDocumentNotFoundError,
     });
     expect(viewSinglePost(fakePost.id)).rejects.toThrow('Post not found.');

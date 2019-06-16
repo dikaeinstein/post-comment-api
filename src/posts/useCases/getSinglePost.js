@@ -1,23 +1,12 @@
 /**
- * @typedef {import('../post/post').Post} Post
- */
-
-/**
- * @callback ViewSinglePost
- * @param {string} postId
- * @returns {Promise<Post & { hash: string; }>}
- */
-
-
-/**
  * Factory function to create the removePost function
  * @param {object} params
  * @param {import('../repository/post').default} params.postRepository
  * @param {Function} params.assert
  * @param {(message: string) => Error} params.makeDocumentNotFoundError
- * @returns {ViewSinglePost}
+ * @returns {import('post').getSinglePost}
  */
-const makeViewSinglePost = ({
+const makeGetSinglePost = ({
   postRepository, assert, makeDocumentNotFoundError,
 }) => async (postId) => {
   assert(postId, 'You must supply postId.');
@@ -31,4 +20,4 @@ const makeViewSinglePost = ({
   return post;
 };
 
-export default makeViewSinglePost;
+export default makeGetSinglePost;
