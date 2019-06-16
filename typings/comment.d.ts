@@ -1,16 +1,15 @@
 declare module "comment" {
-  export function addComment(commentInfo: Post): Promise<Comment>
-  export function editComment(postInfo: Post): Promise<Comment>
-  export function listComments(postId: string): Promise<Comment[]>
-  export function removeComment(commentId: string): Promise<Comment>
+  function addComment(commentInfo: Post): Promise<Comment>
+  function editComment(postInfo: Post): Promise<Comment>
+  function listComments(postId: string): Promise<Comment[]>
+  function removeComment(commentId: string): Promise<Comment>
 
-  type HTTPController = (httpRequest: import('common').Request) => Promise<import('common').Response | Error>
-  export type DeleteComment = HTTPController
-  export type GetComments = HTTPController
-  export type PatchComment = HTTPController
-  export type PostComment = HTTPController
+  type DeleteComment = import('common').HTTPController
+  type GetComments = import('common').HTTPController
+  type PatchComment = import('common').HTTPController
+  type PostComment = import('common').HTTPController
 
-  export interface Comment {
+  interface Comment {
     author: string;
     createdOn?: Date;
     id?: string;
@@ -19,9 +18,9 @@ declare module "comment" {
     source: any;
     text: string;
   }
-  export interface Comment { hash: string; }
+  interface Comment { hash: string; }
 
-  export interface CommentEntity {
+  interface CommentEntity {
     readonly getAuthor: () => string;
     readonly getCreatedOn: () => number | Date;
     readonly getHash: () => string;

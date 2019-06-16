@@ -12,4 +12,7 @@ declare module "common" {
     headers;
     statusCode: number;
   }
+
+  type HTTPController = (httpRequest: import('common').Request) => Promise<import('common').Response | Error>
+  type KoaController = (ctx: import('koa').ParameterizedContext) => Promise<void>
 }

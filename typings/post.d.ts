@@ -1,18 +1,17 @@
 declare module "post" {
-  export function addPost(postInfo: Post): Promise<Post>
-  export function editPost(postInfo: Post): Promise<Post>
-  export function getSinglePost(postId: string): Promise<Post>
-  export function listPosts(): Promise<Post[]>
-  export function removePost(postId: string): Promise<Post>
+  function addPost(postInfo: Post): Promise<Post>
+  function editPost(postInfo: Post): Promise<Post>
+  function getSinglePost(postId: string): Promise<Post>
+  function listPosts(): Promise<Post[]>
+  function removePost(postId: string): Promise<Post>
 
-  type HTTPController = (httpRequest: import('common').Request) => Promise<import('common').Response | Error>
-  export type DeletePost = HTTPController
-  export type GetPost = HTTPController
-  export type GetPosts = HTTPController
-  export type PatchPost = HTTPController
-  export type PostPost = HTTPController
+  type DeletePost = import('common').HTTPController
+  type GetPost = import('common').HTTPController
+  type GetPosts = import('common').HTTPController
+  type PatchPost = import('common').HTTPController
+  type PostPost = import('common').HTTPController
 
-  export interface Post {
+  interface Post {
     author: string;
     createdOn?: Date;
     id?: string;
@@ -21,9 +20,9 @@ declare module "post" {
     text: string;
     title: string;
   }
-  export interface Post { hash: string; }
+  interface Post { hash: string; }
 
-  export interface PostEntity {
+  interface PostEntity {
     readonly getAuthor: () => string;
     readonly getCreatedOn: () => number | Date;
     readonly getHash: () => string;
