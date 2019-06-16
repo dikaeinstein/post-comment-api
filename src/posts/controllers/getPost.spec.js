@@ -4,14 +4,14 @@ import makeFakePost from '__test__/fixtures/post';
 import makeGetPost from './getPost';
 
 
-/** @typedef {import('../controllers').Response} Response */
+/** @typedef {import('common').Response} Response */
 
 describe('getPosts controller', () => {
   it('can retrieve all posts', async () => {
     const fakePost = makeFakePost();
-    const viewSinglePost = () => Promise
+    const getSinglePostStub = () => Promise
       .resolve(fakePost);
-    const getPost = makeGetPost({ viewSinglePost });
+    const getPost = makeGetPost({ getSinglePost: getSinglePostStub });
 
     const response = /** @type {Response} */ (await getPost({
       headers: {
@@ -27,11 +27,11 @@ describe('getPosts controller', () => {
   });
   it('handles errors thrown while fetching post', async () => {
     const fakePost = makeFakePost();
-    const viewSinglePost = () => Promise
+    const getSinglePostSaboteur = () => Promise
       .reject(new Error('Error encountered while fetching post.'));
 
     try {
-      const getPost = makeGetPost({ viewSinglePost });
+      const getPost = makeGetPost({ getSinglePost: getSinglePostSaboteur });
 
       await getPost({
         headers: {

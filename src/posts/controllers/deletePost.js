@@ -2,16 +2,10 @@ import HttpStatus from 'http-status-codes';
 
 
 /**
- * @callback DeletePost
- * @param {import('../controllers').Request} httpRequest
- * @returns {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * Factory function to create deletePost HTTP controller
  * @param {object} params
- * @param {import('../useCases/removePost').RemovePost} params.removePost
- * @returns {DeletePost}
+ * @param {import('post').removePost} params.removePost
+ * @returns {import('post').DeletePost}
  */
 const makeDeletePost = ({ removePost }) => async (httpRequest) => {
   try {

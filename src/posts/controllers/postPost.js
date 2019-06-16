@@ -10,7 +10,7 @@ import HttpStatus from 'http-status-codes';
 /**
  * Factory function to create the postPost controller
  * @param {object} params
- * @param {import('../useCases/addPost').AddPost} params.addPost
+ * @param {import('post').addPost} params.addPost
  * @returns {PostPost}
  */
 const makePostPost = ({ addPost }) => async (httpRequest) => {

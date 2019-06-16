@@ -2,15 +2,9 @@ import HttpStatus from 'http-status-codes';
 
 
 /**
- * @callback PatchPost
- * @param {import('../controllers').Request} httpRequest
- * @returns {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * @param {object} params
- * @param {import('../useCases/editPost').EditPost} params.editPost
- * @return {PatchPost}
+ * @param {import('post').editPost} params.editPost
+ * @return {import('post').PatchPost}
  */
 const makePatchPost = ({ editPost }) => async (httpRequest) => {
   try {

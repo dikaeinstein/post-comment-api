@@ -4,13 +4,13 @@ import makeFakePost from '__test__/fixtures/post';
 import makePostPost from './postPost';
 
 
-/** @typedef {import('./getPosts').Response} Response */
+/** @typedef {import('common').Response} Response */
 
 describe('postPost controller', () => {
   it('successfully posts a post', async () => {
     const post = makeFakePost();
-    const addPost = postInfo => Promise.resolve(postInfo);
-    const postPost = makePostPost({ addPost });
+    const addPostStub = postInfo => Promise.resolve(postInfo);
+    const postPost = makePostPost({ addPost: addPostStub });
     const response = /** @type {Response} */ (await postPost({
       headers: {
         'Content-Type': 'application/json',
@@ -25,8 +25,8 @@ describe('postPost controller', () => {
   });
   it('handles errors throw while posting post', async () => {
     const post = makeFakePost();
-    const addPost = () => Promise.reject(new Error('Explode!'));
-    const postPost = makePostPost({ addPost });
+    const addPostSaboteur = () => Promise.reject(new Error('Explode!'));
+    const postPost = makePostPost({ addPost: addPostSaboteur });
     try {
       await postPost({
         headers: {

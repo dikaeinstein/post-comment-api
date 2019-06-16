@@ -4,13 +4,13 @@ import makeFakePost from '__test__/fixtures/post';
 import makeDeletePost from './deletePost';
 
 
-/** @typedef {import('../controllers').Response} Response */
+/** @typedef {import('common').Response} Response */
 
 describe('deletePost controller', () => {
   it('successfully deletes a post', async () => {
     const post = makeFakePost();
-    const removePost = () => Promise.resolve(post);
-    const deletePost = makeDeletePost({ removePost });
+    const removePostStub = () => Promise.resolve(post);
+    const deletePost = makeDeletePost({ removePost: removePostStub });
 
     const response = /** @type {Response} */ (await deletePost({
       headers: { 'Content-Type': 'Application/json' },
@@ -22,8 +22,8 @@ describe('deletePost controller', () => {
   });
   it('catches error thrown', async () => {
     const post = makeFakePost();
-    const removePost = () => Promise.reject(new Error('Explode!'));
-    const deletePost = makeDeletePost({ removePost });
+    const removePostSaboteur = () => Promise.reject(new Error('Explode!'));
+    const deletePost = makeDeletePost({ removePost: removePostSaboteur });
     try {
       await deletePost({
         headers: { 'Content-Type': 'Application/json' },

@@ -2,24 +2,18 @@ import HttpStatuses from 'http-status-codes';
 
 
 /**
- * @callback GetPost
- * @param {import('../controllers').Request} httpRequest
- * @returns {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * Factory function to create the getPost HTTP controller
  * @param {object} params
- * @param {import('../useCases/viewSinglePost').ViewSinglePost} params.viewSinglePost
- * @returns {GetPost}
+ * @param {import('post').getSinglePost} params.getSinglePost
+ * @returns {import('post').GetPost}
  */
-const makeGetPost = ({ viewSinglePost }) => async (httpRequest) => {
+const makeGetPost = ({ getSinglePost }) => async (httpRequest) => {
   const headers = { 'Content-Type': 'application/json' };
 
   try {
     const { id } = httpRequest.params;
 
-    const post = await viewSinglePost(id);
+    const post = await getSinglePost(id);
 
     return {
       headers,

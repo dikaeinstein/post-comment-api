@@ -7,17 +7,15 @@ import makePatchPost from './patchPost';
 describe('patchPost Controller', () => {
   it('successfully patches a post', async () => {
     const fakePost = makeFakePost();
-    const editPost = p => Promise.resolve(p);
-    const patchPost = makePatchPost({ editPost });
+    const editPostStub = p => Promise.resolve(p);
+    const patchPost = makePatchPost({ editPost: editPostStub });
     const request = {
       headers: {
         'Content-Type': 'application/json',
         Referer: fakePost.source.referer,
         'User-Agent': fakePost.source.browser,
       },
-      params: {
-        id: fakePost.id,
-      },
+      params: { id: fakePost.id },
       body: fakePost,
       ip: fakePost.source.ip,
     };
@@ -41,9 +39,7 @@ describe('patchPost Controller', () => {
         'Content-Type': 'application/json',
         'User-Agent': fakePost.source.browser,
       },
-      params: {
-        id: fakePost.id,
-      },
+      params: { id: fakePost.id },
       body: fakePost,
       ip: fakePost.source.ip,
     };
