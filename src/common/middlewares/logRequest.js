@@ -1,7 +1,7 @@
 /**
  * Middleware function that logs each incoming request and outgoing response
  * @param {object} params
- * @param {import('../logger').Logger} params.logger
+ * @param {import('common').Logger} params.logger
  * @returns {import('koa').Middleware} Koa middleware
  */
 const logRequest = ({ logger }) => async (ctx, next) => {
@@ -19,7 +19,8 @@ const logRequest = ({ logger }) => async (ctx, next) => {
 
   // Log the request coming in
   const startTime = Date.now();
-  logger.info(requestInfo, `${ctx.ip} => ${ctx.method} ${ctx.originalUrl}, ${ctx.request}`);
+  logger.info(requestInfo,
+    `${ctx.ip} => ${ctx.method} ${ctx.originalUrl}, ${ctx.request}`);
 
   await next();
   const endTime = Date.now();
@@ -37,7 +38,8 @@ const logRequest = ({ logger }) => async (ctx, next) => {
   };
 
   // Log the response going out
-  logger.info(responseInfo, `${ctx.ip} <= ${ctx.method} ${ctx.url} ${ctx.status} - ${elapsedTime}ms`);
+  logger.info(responseInfo,
+    `${ctx.ip} <= ${ctx.method} ${ctx.url} ${ctx.status} - ${elapsedTime}ms`);
 };
 
 export default logRequest;

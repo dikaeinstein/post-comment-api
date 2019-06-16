@@ -25,6 +25,3 @@ const commentService = Object.freeze({
 });
 
 export default commentService;
-export {
-  addComment, editComment, listComments, removeComment,
-};

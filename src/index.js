@@ -1,19 +1,19 @@
 import initializeLogger from 'src/common/logger';
 import justMyCode from 'src/common/utils/justMyCode';
-import { db as commentsDB } from './comments';
-import { db as postsDB } from './posts';
+import comments from './comments';
+import posts from './posts';
 import makeApp from './app';
 
 
 const config = process.env;
 
-const logger = initializeLogger({
+export const logger = initializeLogger({
   config,
   name: 'post-comment-api',
   level: config.LOG_LEVEL,
 });
 
-const app = makeApp({ logger });
+export const app = makeApp({ logger });
 
 app.on('error', (err, ctx) => {
   const errorInfo = {
@@ -27,9 +27,5 @@ app.on('error', (err, ctx) => {
     `${ctx.ip} => ${ctx.method} ${ctx.originalUrl} ${ctx.status}`);
 });
 
-export default Object.freeze({
-  app, commentsDB, postsDB, logger,
-});
-export {
-  app, commentsDB, postsDB, logger,
-};
+export const commentsDB = comments.db;
+export const postsDB = posts.db;

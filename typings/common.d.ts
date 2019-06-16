@@ -1,4 +1,21 @@
 declare module "common" {
+  interface LogFn {
+    (msg: string, ...args: any[]): void;
+    (obj: object, msg?: string, ...args: any[]): void;
+  }
+
+  interface Logger {
+    info: LogFn;
+    debug: LogFn;
+    warn: LogFn;
+    error: LogFn;
+  }
+
+  type KoaRouter = import('koa-router')
+  interface MiniApp extends KoaRouter {
+    opts?: { prefix: string; };
+  }
+
   interface Request {
     body?
     headers;

@@ -30,6 +30,3 @@ const postService = Object.freeze({
 });
 
 export default postService;
-export {
-  addPost, editPost, listPosts, removePost, getSinglePost,
-};

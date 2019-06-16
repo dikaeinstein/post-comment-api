@@ -7,11 +7,8 @@ import HttpStatus from 'http-status-codes';
 
 import logRequest from 'src/common/middlewares/logRequest';
 import serializeError from 'src/common/middlewares/serializeError';
-import { router as commentsRouter } from './comments';
-import { router as postsRouter } from './posts';
-
-
-/** @typedef {Koa<any, {}>} App */
+import comments from './comments';
+import posts from './posts';
 
 
 const rootHandler = async (ctx) => {
@@ -19,16 +16,11 @@ const rootHandler = async (ctx) => {
   ctx.body = { message: 'Welcome to post-comment-api.' };
 };
 
-// const notFoundHandler = async (ctx) => {
-//   ctx.status = HttpStatus.NOT_FOUND;
-//   ctx.body = { message: 'Oops!... The resource you are looking for does not exit. Check the URL and try again.' };
-// };
-
 /**
  *
  * @param {object} params
- * @param {import('src/common/logger').Logger} params.logger
- * @return {App}
+ * @param {import('common').Logger} params.logger
+ * @return {Koa<any, {}>}
  */
 const makeApp = ({ logger }) => {
   const app = new Koa();
@@ -48,7 +40,10 @@ const makeApp = ({ logger }) => {
 
   rootAPIRouter.get('/', rootHandler);
 
-  [commentsRouter, postsRouter].forEach((miniApp) => {
+  /** @type {import('common').MiniApp[]} */
+  const miniApps = [comments.router, posts.router];
+
+  miniApps.forEach((miniApp) => {
     rootAPIRouter.use(miniApp.routes());
     rootAPIRouter.use(miniApp.allowedMethods());
 
