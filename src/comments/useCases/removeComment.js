@@ -1,20 +1,10 @@
 /**
- * @typedef {import('../comment/comment').Comment} Comment
- */
-
-/**
- * @callback RemoveComment
- * @param {string} commentId
- * @returns {Promise<Comment & { hash: string }>}
- */
-
-/**
  * Factory function to create the removeComment function
  * @param {object} params
  * @param {import('../repository/comment').default} params.commentRepository
  * @param {Function} params.assert
  * @param {(message: string) => Error} params.makeDocumentNotFoundError
- * @returns {RemoveComment}
+ * @returns {import('comment').removeComment}
  */
 const makeRemoveComment = ({
   commentRepository, assert, makeDocumentNotFoundError,

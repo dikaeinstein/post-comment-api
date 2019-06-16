@@ -2,7 +2,7 @@ import assert from 'assert';
 
 import cases from 'jest-in-case';
 
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakeComment from '__test__/fixtures/comment';
 import { makeDocumentNotFoundError } from 'src/common/errors';
 import makeEditComment from './editComment';
@@ -13,8 +13,8 @@ import CommentRepository from '../repository/comment';
 let commentRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  commentRepository = new CommentRepository({ db });
+  const model = makeFakeModel('Comment');
+  commentRepository = new CommentRepository({ model });
 });
 
 const editCommentValidationTestCases = [

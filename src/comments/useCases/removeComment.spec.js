@@ -3,7 +3,7 @@ import assert from 'assert';
 import cases from 'jest-in-case';
 
 import { makeDocumentNotFoundError } from 'src/common/errors';
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakeComment from '__test__/fixtures/comment';
 import makeRemoveComment from './removeComment';
 import CommentRepository from '../repository/comment';
@@ -13,8 +13,8 @@ import CommentRepository from '../repository/comment';
 let commentRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  commentRepository = new CommentRepository({ db });
+  const model = makeFakeModel('Comment');
+  commentRepository = new CommentRepository({ model });
 });
 
 const removeCommentTestCases = [
@@ -44,7 +44,8 @@ cases('removeComment use case',
 describe('removeComment use case', () => {
   it('can remove comment', async () => {
     const comment = makeFakeComment();
-    const inserted = await commentRepository.insert(comment);
+    const inserted = /** @type {import('comment').Comment} */ (await commentRepository
+      .insert(comment));
 
     const removeComment = makeRemoveComment({
       commentRepository, assert, makeDocumentNotFoundError,

@@ -1,13 +1,13 @@
 import makeFakeComment from '__test__/fixtures/comment';
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeAddComment from './addComment';
 import CommentRepository from '../repository/comment';
 
 
 let commentRepository;
 beforeAll(() => {
-  const db = makeFakeDB();
-  commentRepository = new CommentRepository({ db });
+  const model = makeFakeModel('Comment');
+  commentRepository = new CommentRepository({ model });
 });
 
 describe('addComment use case', () => {

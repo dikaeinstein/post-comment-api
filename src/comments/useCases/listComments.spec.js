@@ -1,7 +1,7 @@
 import assert from 'assert';
 
-import makeFakeDB from '__test__/fixtures/db';
 import makeFakeComment from '__test__/fixtures/comment';
+import { makeFakeModel } from '__test__/fixtures/db';
 import CommentRepository from '../repository/comment';
 import makeListComments from './listComments';
 
@@ -11,8 +11,8 @@ import makeListComments from './listComments';
  */
 let commentRepository;
 beforeAll(() => {
-  const db = makeFakeDB();
-  commentRepository = new CommentRepository({ db });
+  const model = makeFakeModel('Comment');
+  commentRepository = new CommentRepository({ model });
 });
 
 describe('listComment use case', () => {

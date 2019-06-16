@@ -2,22 +2,12 @@ import makeComment from '../comment';
 
 
 /**
- * @typedef {import('../comment/comment').Comment} Comment
- */
-
-/**
- * @callback EditComment
- * @param {Comment} options
- * @returns {Promise<Comment & { hash: string }>}
- */
-
-/**
  * Factory function to create the editComment function
  * @param {object} params
  * @param {import('../repository/comment').default} params.commentRepository
  * @param {Function} params.assert
  * @param {(message: string) => Error} params.makeDocumentNotFoundError
- * @returns {EditComment}
+ * @returns {import('comment').editComment}
  */
 const makeEditComment = ({
   commentRepository, assert, makeDocumentNotFoundError,
