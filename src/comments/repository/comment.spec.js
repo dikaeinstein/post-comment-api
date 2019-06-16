@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakeComment from '__test__/fixtures/comment';
 import CommentRepository from './comment';
 import commentSchema from '../model/commentSchema';
@@ -9,24 +9,11 @@ import commentSchema from '../model/commentSchema';
 let commentRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  commentRepository = new CommentRepository({
-    db,
-    schema: commentSchema,
-    plugins: [(schema) => {}],
-  });
+  const model = makeFakeModel('Comment');
+  commentRepository = new CommentRepository({ model });
 });
 
 describe('CommentRepository', () => {
-  it('initializes without plugins', () => {
-    const db = makeFakeDB();
-    const testCommentRepository = new CommentRepository({
-      db,
-      schema: commentSchema,
-    });
-    expect(testCommentRepository).toBeInstanceOf(CommentRepository);
-  });
-
   it('lists comments', async () => {
     const comment1 = makeFakeComment();
     const comment2 = makeFakeComment();

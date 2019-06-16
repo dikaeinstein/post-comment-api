@@ -1,43 +1,13 @@
 /**
- * @template T
- * @typedef {Object<Function, any>} Model Provides the interface to the data store.
- * @property {(doc, options?) => Promise<T>} create
- * @property {(condition, projections?, options?) => Promise<T[]>} find
- * @property {(condition, projection?, options?) => Promise<T>} findOne
- * @property {(condition, attrs, options?) => Promise<T>} findOneAndUpdate
- * @property {(condition, options?) => Promise<T>} findOneAndRemove
- */
-
-/**
- * @typedef {import('../comment/comment').Comment & { hash: string }} Comment
- */
-
-/**
- * @typedef {Object<Function,any>} DB The database connection
- * @property {(name: string, schema) => Model<Comment>} model
- */
-
-/**
- * @typedef {import('mongoose').Schema} Schema
- */
-
-/**
- * Represents the Comment data repository (knows a little implementation detail(Mongoose))
+ * Represents the Comment data repository
  */
 class CommentRepository {
   /**
    * @param {object} params
-   * @param {DB} params.db Database connection
-   * @param {Schema} [params.schema]
-   * @param {((schema: Schema) => void)[]} [params.plugins]
+   * @param {import('model').Model<import('comment').Comment>} params.model Comment model
    */
-  constructor({ db, schema, plugins = [] }) {
-    if (schema && plugins) {
-      plugins.forEach((plugin) => {
-        schema.plugin(plugin);
-      });
-    }
-    this.model = db.model('Comment', schema);
+  constructor({ model }) {
+    this.model = model;
   }
 
   /**
@@ -45,6 +15,7 @@ class CommentRepository {
    * @param {*} query
    * @param {*} [projections]
    * @param {*} [options]
+   * @returns {Promise<import('comment').Comment[]>}
    */
   async findAll(query, projections, options) {
     return this.model.find(query, projections, options);
@@ -55,6 +26,7 @@ class CommentRepository {
    * @param {string} id
    * @param {*} [projection]
    * @param {*} [options]
+   * @returns {Promise<import('comment').Comment>}
    */
   async findById(id, projection, options) {
     return this.model.findOne({ id }, projection, options);
@@ -63,16 +35,18 @@ class CommentRepository {
   /**
    * Find all comments by postId
    * @param {*} postId
+   * @returns {Promise<import('comment').Comment[]>}
    */
   async findByPostId(postId) {
     return this.model.find({ postId });
   }
 
   /**
-   * Insert comments into db. Comment info can either be an array of documents or
-   * a single document. To specify options, docs must be an array.
+   * Insert comments into db. Comment info can either be an array of comment or
+   * a single comment. To specify options, docs must be an array.
    * @param {*} commentInfo
    * @param {*} [options]
+   * @returns {Promise<import('comment').Comment | import('comment').Comment[]>}
    */
   async insert(commentInfo, options) {
     return this.model.create(commentInfo, options);
@@ -83,6 +57,7 @@ class CommentRepository {
    * @param {object} query
    * @param {object} commentInfo
    * @param {object} [options]
+   * @returns {Promise<import('comment').Comment>}
    */
   async update(query, commentInfo, options) {
     return this.model.findOneAndUpdate(query, commentInfo, {
@@ -93,6 +68,7 @@ class CommentRepository {
   /**
    * Remove a single comment
    * @param {object} options
+   * @returns {Promise<import('comment').Comment>}
    */
   async remove(options) {
     const { id, ...others } = options;
@@ -102,6 +78,7 @@ class CommentRepository {
   /**
    * Find comment by hash
    * @param {string} hash
+   * @returns {Promise<import('comment').Comment>}
    */
   async findByHash(hash) {
     return this.model.findOne({ hash });
