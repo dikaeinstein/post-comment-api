@@ -12,10 +12,13 @@
     "lint": "eslint src/**/*.js",
     "prebuild": "yarn clean",
     "start": "node dist/bin/www.js",
-    "test": "jest --coverage --runInBand --detectOpenHandles",
+    "test": "jest --runInBand --coverage",
     "test:coveralls": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand --no-cache",
-    "test:watch": "jest --runInBand --watchAll",
+    "test:integration": "jest --coverage --runInBand --detectOpenHandles -c jest.config.integration.js",
+    "test:unit": "jest --coverage --detectOpenHandles -c jest.config.unit.js",
+    "test:integration:watch": "yarn test:integration --watchAll",
+    "test:unit:watch": "yarn test:unit --watchAll",
     "watch": "nodemon"
   },
   "devDependencies": {
