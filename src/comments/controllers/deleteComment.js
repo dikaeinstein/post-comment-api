@@ -2,15 +2,9 @@ import HttpStatus from 'http-status-codes';
 
 
 /**
- * @callback DeleteComment
- * @param {import('../controllers').Request} httpRequest
- * @returns {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * @param {object} params
- * @param {import('../useCases/removeComment').RemoveComment} params.removeComment
- * @returns {DeleteComment}
+ * @param {import('comment').removeComment} params.removeComment
+ * @returns {import('comment').DeleteComment}
  */
 const makeDeleteComment = ({ removeComment }) => async (httpRequest) => {
   try {

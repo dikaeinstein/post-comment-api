@@ -7,8 +7,8 @@ import makePatchComment from './patchComment';
 describe('patchComment Controller', () => {
   it('successfully patches a comment', async () => {
     const fakeComment = makeFakeComment();
-    const editComment = c => Promise.resolve(c);
-    const patchComment = makePatchComment({ editComment });
+    const editCommentStub = c => Promise.resolve(c);
+    const patchComment = makePatchComment({ editComment: editCommentStub });
     const request = {
       headers: {
         'Content-Type': 'application/json',
@@ -34,8 +34,8 @@ describe('patchComment Controller', () => {
   });
   it('handles error thrown while patching a comment', async () => {
     const fakeComment = makeFakeComment();
-    const editComment = () => Promise.reject(new Error('Blow!'));
-    const patchComment = makePatchComment({ editComment });
+    const editCommentSaboteur = () => Promise.reject(new Error('Blow!'));
+    const patchComment = makePatchComment({ editComment: editCommentSaboteur });
     const request = {
       headers: {
         'Content-Type': 'application/json',

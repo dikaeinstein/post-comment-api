@@ -10,22 +10,6 @@ import makePatchComment from './patchComment';
 import makePostComment from './postComment';
 
 
-/**
- * @typedef {object} Response
- * @property {object} headers
- * @property {number} statusCode
- * @property {object} [body]
- */
-
-/**
- * @typedef {object} Request
- * @property {object} headers
- * @property {object} [query]
- * @property {object} [params]
- * @property {object} [body]
- * @property {string} ip
- */
-
 const deleteComment = makeDeleteComment({ removeComment });
 const getComments = makeGetComments({ listComments });
 const patchComment = makePatchComment({ editComment });

@@ -1,28 +1,4 @@
 /**
- * @typedef {Object<string, Date, object>} Comment
- * @property {string} author
- * @property {Date} [createdOn]
- * @property {string} [id]
- * @property {object} source
- * @property {Date} [modifiedOn]
- * @property {string} postId
- * @property {string} text
- */
-
-/**
- * @typedef {Readonly<{
- *   getAuthor: () => string;
- *   getCreatedOn: () => number | Date;
- *   getHash: () => string;
- *   getId: () => string;
- *   getModifiedOn: () => number | Date;
- *   getPostId: () => string;
- *   getSource: () => import('src/common/utils/source').Source;
- *   getText: () => string;
- * }>} ReadonlyComment
- */
-
-/**
  * @typedef {import('joi')} SchemaBuilder
  */
 
@@ -34,7 +10,7 @@
  * @param {SchemaBuilder} params.schemaBuilder
  * @param {import('src/common/utils/source').MakeSource} params.makeSource
  * @param {(message: string) => Error} params.makeUnProcessableEntityError
- * @returns {(comment: Comment) => ReadonlyComment} makeComment
+ * @returns {(comment: import('comment').Comment) => import('comment').CommentEntity}
  */
 const buildMakeComment = ({
   Id, md5, schemaBuilder, makeSource, makeUnProcessableEntityError,

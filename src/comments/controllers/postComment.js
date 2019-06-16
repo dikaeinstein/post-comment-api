@@ -2,16 +2,10 @@ import HttpStatus from 'http-status-codes';
 
 
 /**
- * @callback PostComment
- * @param {import('../controllers').Request} httpRequest
- * @return {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * Factory function to create the postComment controller
  * @param {object} params
- * @param {import('../useCases/addComment').AddComment} params.addComment
- * @returns {PostComment}
+ * @param {import('comment').addComment} params.addComment
+ * @returns {import('comment').PostComment}
  */
 const makePostComment = ({ addComment }) => async (httpRequest) => {
   try {

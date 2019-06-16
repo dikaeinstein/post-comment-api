@@ -2,15 +2,9 @@ import HttpStatus from 'http-status-codes';
 
 
 /**
- * @callback PatchComment
- * @param {import('../controllers').Request} httpRequest
- * @returns {Promise<import('../controllers').Response | Error>}
- */
-
-/**
  * @param {object} params
- * @param {import('../useCases/editComment').EditComment} params.editComment
- * @return {PatchComment}
+ * @param {import('comment').editComment} params.editComment
+ * @return {import('comment').PatchComment}
  */
 const makePatchComment = ({ editComment }) => async (httpRequest) => {
   try {

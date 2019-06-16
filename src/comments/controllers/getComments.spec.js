@@ -4,15 +4,15 @@ import makeFakeComment from '__test__/fixtures/comment';
 import makeGetComments from './getComments';
 
 
-/** @typedef {import('../controllers').Response} Response */
+/** @typedef {import('common').Response} Response */
 
 describe('getComments controller', () => {
   it('can retrieve all comments', async () => {
     const fakeComment1 = makeFakeComment();
     const fakeComment2 = makeFakeComment({ postId: fakeComment1.postId });
-    const listComments = () => Promise
+    const listCommentsStub = () => Promise
       .resolve([fakeComment1, fakeComment2]);
-    const getComments = makeGetComments({ listComments });
+    const getComments = makeGetComments({ listComments: listCommentsStub });
 
     const response = /** @type {Response} */ (await getComments({
       headers: {
@@ -25,16 +25,19 @@ describe('getComments controller', () => {
       },
       ip: fakeComment1.source.ip,
     }));
+
     expect(response.body.comments).toEqual([fakeComment1, fakeComment2]);
     expect(response.statusCode).toEqual(HttpStatus.OK);
   });
   it('handles errors thrown while fetching comments', async () => {
     const fakeComment1 = makeFakeComment();
-    const listComments = () => Promise
+    const listCommentsSaboteur = () => Promise
       .reject(new Error('Error fetching comments.'));
 
     try {
-      const getComments = makeGetComments({ listComments });
+      const getComments = makeGetComments({
+        listComments: listCommentsSaboteur,
+      });
 
       await getComments({
         headers: {

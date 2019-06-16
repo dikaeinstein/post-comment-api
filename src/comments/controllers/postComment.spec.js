@@ -4,7 +4,7 @@ import makeFakeComment from '__test__/fixtures/comment';
 import makePostComment from './postComment';
 
 
-/** @typedef {import('./getComments').Response} Response */
+/** @typedef {import('common').Response} Response */
 
 describe('postComment controller', () => {
   it('successfully posts a comment', async () => {
