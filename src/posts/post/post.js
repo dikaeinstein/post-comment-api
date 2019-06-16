@@ -1,13 +1,9 @@
 /**
- * @typedef {import('joi')} SchemaBuilder
- */
-
-/**
  * Factory function to create the makePost function
  * @param {object} params
  * @param {import('src/common/utils/id').Id} params.Id
  * @param {(text: string) => string} params.md5
- * @param {SchemaBuilder} params.schemaBuilder
+ * @param {import('common').SchemaBuilder} params.schemaBuilder
  * @param {import('src/common/utils/source').MakeSource} params.makeSource
  * @param {(message: string) => Error} params.makeUnProcessableEntityError
  * @returns {(post: import('post').Post) => import('post').PostEntity}

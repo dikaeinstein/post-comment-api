@@ -1,13 +1,9 @@
 /**
- * @typedef {import('joi')} SchemaBuilder
- */
-
-/**
  * Factory function to create the makeComment function
  * @param {object} params
  * @param {import('src/common/utils/id').Id} params.Id
  * @param {(text: string) => string} params.md5
- * @param {SchemaBuilder} params.schemaBuilder
+ * @param {import('common').SchemaBuilder} params.schemaBuilder
  * @param {import('src/common/utils/source').MakeSource} params.makeSource
  * @param {(message: string) => Error} params.makeUnProcessableEntityError
  * @returns {(comment: import('comment').Comment) => import('comment').CommentEntity}
