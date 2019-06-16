@@ -13,17 +13,16 @@ const logRequest = ({ logger }) => async (ctx, next) => {
     type: ctx.request.type,
     length: ctx.request.length,
     headers: ctx.request.headers,
-    params: ctx.request.params,
     query: ctx.request.query,
     body: ctx.request.body,
   };
 
   // Log the request coming in
-  const startTime = new Date();
-  logger.info(requestInfo, `${ctx.ip} => ${ctx.method} ${ctx.originalUrl}`);
+  const startTime = Date.now();
+  logger.info(requestInfo, `${ctx.ip} => ${ctx.method} ${ctx.originalUrl}, ${ctx.request}`);
 
   await next();
-  const endTime = new Date();
+  const endTime = Date.now();
   const elapsedTime = Math.max(1, endTime - startTime);
 
   const responseInfo = {
