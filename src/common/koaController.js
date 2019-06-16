@@ -1,34 +1,7 @@
 /**
- * @typedef {object} Response
- * @property {object} headers
- * @property {number} statusCode
- * @property {object} [body]
- */
-
-/**
- * @typedef {object} Request
- * @property {object} headers
- * @property {object} [query]
- * @property {object} [params]
- * @property {object} [body]
- * @property {string} ip
- */
-
-/**
- * @callback KoaController
- * @param {import('koa').Context} ctx
- */
-
-/**
- * @callback Controller
- * @param {Request} httpRequest
- * @returns {Promise<Response | Error>}
- */
-
-/**
  * Factory function to create a koa middleware
- * @param {Controller} controller
- * @returns {KoaController}
+ * @param {import('common').HTTPController} controller
+ * @returns {import('common').KoaController}
  */
 const makeKoaController = controller => async (ctx) => {
   try {
@@ -48,7 +21,8 @@ const makeKoaController = controller => async (ctx) => {
       },
     };
 
-    const httpResponse = /** @type {Response} */ (await controller(httpRequest));
+    const httpResponse = /** @type {import('common').Response} */ (
+      await controller(httpRequest));
 
     ctx.status = httpResponse.statusCode;
     ctx.body = httpResponse.body;
