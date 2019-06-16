@@ -2,22 +2,12 @@ import makePost from '../post';
 
 
 /**
- * @typedef {import('../post/post').Post} Post
- */
-
-/**
- * @callback EditPost
- * @param {Post} postInfo
- * @returns {Promise<Post & { hash: string }>}
- */
-
-/**
  * Factory function to create the editPost function
  * @param {object} params
  * @param {import('../repository/post').default} params.postRepository
  * @param {Function} params.assert
  * @param {(message: string) => Error} params.makeDocumentNotFoundError
- * @returns {EditPost}
+ * @returns {import('post').editPost}
  */
 const makeEditPost = ({
   postRepository, assert, makeDocumentNotFoundError,

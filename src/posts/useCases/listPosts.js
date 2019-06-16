@@ -1,17 +1,8 @@
 /**
- * @typedef {import('../post/post').Post} Post
- */
-
-/**
- * @callback ListPosts
- * @return {Promise<(Post & { hash: string })[]>}
- */
-
-/**
  * Factory function to create listPosts function
  * @param {object} params
  * @param {import('../repository/post').default} params.postRepository
- * @returns {ListPosts}
+ * @returns {import('post').listPosts}
  */
 const makeListPosts = ({ postRepository }) => async () => postRepository
   .findAll({});

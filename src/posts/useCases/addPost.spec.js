@@ -1,13 +1,15 @@
 import makeFakePost from '__test__/fixtures/post';
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeAddPost from './addPost';
 import PostRepository from '../repository/post';
 
 
+/** @type {PostRepository} */
 let postRepository;
+
 beforeAll(() => {
-  const db = makeFakeDB();
-  postRepository = new PostRepository({ db });
+  const model = makeFakeModel('Post');
+  postRepository = new PostRepository({ model });
 });
 
 describe('addPost use case', () => {

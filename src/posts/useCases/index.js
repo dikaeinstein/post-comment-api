@@ -5,7 +5,7 @@ import makeAddPost from './addPost';
 import makeEditPost from './editPost';
 import makeListPosts from './listPosts';
 import makeRemovePost from './removePost';
-import makeViewSinglePost from './viewSinglePost';
+import makeGetSinglePost from './getSinglePost';
 import postRepository from '../repository';
 
 
@@ -17,7 +17,7 @@ const listPosts = makeListPosts({ postRepository });
 const removePost = makeRemovePost({
   postRepository, assert, makeDocumentNotFoundError,
 });
-const viewSinglePost = makeViewSinglePost({
+const getSinglePost = makeGetSinglePost({
   postRepository, assert, makeDocumentNotFoundError,
 });
 
@@ -26,10 +26,10 @@ const postService = Object.freeze({
   editPost,
   listPosts,
   removePost,
-  viewSinglePost,
+  getSinglePost,
 });
 
 export default postService;
 export {
-  addPost, editPost, listPosts, removePost, viewSinglePost,
+  addPost, editPost, listPosts, removePost, getSinglePost,
 };

@@ -2,20 +2,10 @@ import makePost from '../post';
 
 
 /**
- * @typedef {import('../post/post').Post} Post
- */
-
-/**
- * @callback AddPost
- * @param {Post} postInfo
- * @returns {Promise<Post & { hash: string }>}
- */
-
-/**
- * Factory function to create the addComment function
+ * Factory function to create the addPost function
  * @param {object} params
  * @param {import('../repository/post').default} params.postRepository
- * @returns {AddPost}
+ * @returns {import('post').addPost}
  */
 const makeAddPost = ({ postRepository }) => async (postInfo) => {
   const post = makePost(postInfo);
@@ -28,20 +18,21 @@ const makeAddPost = ({ postRepository }) => async (postInfo) => {
 
   const source = post.getSource();
 
-  return postRepository.insert({
-    author: post.getAuthor(),
-    createdOn: post.getCreatedOn(),
-    hash: post.getHash(),
-    id: post.getId(),
-    modifiedOn: post.getModifiedOn(),
-    source: {
-      browser: source.getBrowser(),
-      ip: source.getIp(),
-      referer: source.getReferer(),
-    },
-    text: post.getText(),
-    title: post.getTitle(),
-  });
+  return /** @type {Promise<import('post').Post>} */ (postRepository
+    .insert({
+      author: post.getAuthor(),
+      createdOn: post.getCreatedOn(),
+      hash: post.getHash(),
+      id: post.getId(),
+      modifiedOn: post.getModifiedOn(),
+      source: {
+        browser: source.getBrowser(),
+        ip: source.getIp(),
+        referer: source.getReferer(),
+      },
+      text: post.getText(),
+      title: post.getTitle(),
+    }));
 };
 
 export default makeAddPost;

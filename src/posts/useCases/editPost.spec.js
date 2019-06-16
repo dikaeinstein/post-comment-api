@@ -2,7 +2,7 @@ import assert from 'assert';
 
 import cases from 'jest-in-case';
 
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakePost from '__test__/fixtures/post';
 import { makeDocumentNotFoundError } from 'src/common/errors';
 import makeEditPost from './editPost';
@@ -13,8 +13,8 @@ import PostRepository from '../repository/post';
 let postRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  postRepository = new PostRepository({ db });
+  const model = makeFakeModel('Post');
+  postRepository = new PostRepository({ model });
 });
 
 const editPostValidationTestCases = [

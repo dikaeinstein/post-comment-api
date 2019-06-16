@@ -1,9 +1,8 @@
 import assert from 'assert';
 
-import makeFakeDB from '__test__/fixtures/db';
+import { makeFakeModel } from '__test__/fixtures/db';
 import makeFakePost from '__test__/fixtures/post';
 import { makeDocumentNotFoundError } from 'src/common/errors';
-import md5 from 'src/common/utils/md5';
 import makeRemovePost from './removePost';
 import PostRepository from '../repository/post';
 
@@ -12,8 +11,8 @@ import PostRepository from '../repository/post';
 let postRepository;
 
 beforeAll(() => {
-  const db = makeFakeDB();
-  postRepository = new PostRepository({ db });
+  const model = makeFakeModel('Post');
+  postRepository = new PostRepository({ model });
 });
 
 describe('removePost use case', () => {
@@ -27,8 +26,8 @@ describe('removePost use case', () => {
 
   it('can remove post', async () => {
     const post = makeFakePost();
-
-    const inserted = await postRepository.insert(post);
+    const inserted = /** @type {import('post').Post} */ (await postRepository
+      .insert(post));
 
     const removePost = makeRemovePost({
       postRepository, assert, makeDocumentNotFoundError,

@@ -1,28 +1,4 @@
 /**
- * @typedef {Object<string, Date, object>} Post
- * @property {string} author
- * @property {Date} [createdOn]
- * @property {string} [id]
- * @property {object} source
- * @property {Date} [modifiedOn]
- * @property {string} text
- * @property {string} title
- */
-
-/**
- * @typedef {Readonly<{
- *   getAuthor: () => string;
- *   getCreatedOn: () => number | Date;
- *   getHash: () => string;
- *   getId: () => string;
- *   getModifiedOn: () => number | Date;
- *   getSource: () => import('src/common/utils/source').Source;
- *   getText: () => string;
- *   getTitle: () => string;
- * }>} ReadonlyPost
- */
-
-/**
  * @typedef {import('joi')} SchemaBuilder
  */
 
@@ -34,7 +10,7 @@
  * @param {SchemaBuilder} params.schemaBuilder
  * @param {import('src/common/utils/source').MakeSource} params.makeSource
  * @param {(message: string) => Error} params.makeUnProcessableEntityError
- * @returns {(post: Post) => ReadonlyPost} makePost
+ * @returns {(post: import('post').Post) => import('post').PostEntity}
  */
 const buildMakePost = ({
   Id, md5, makeSource, schemaBuilder, makeUnProcessableEntityError,
