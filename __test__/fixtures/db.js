@@ -2,22 +2,6 @@
 import { makeDocumentNotFoundError } from 'src/common/errors';
 
 
-/**
- * @template T
- * @typedef {Object<Function, any>} Model Provides the interface to the data store.
- * @property {(doc, options?) => Promise<T>} create
- * @property {(condition, projections, options) => Promise<T[]>} find
- * @property {(condition) => Promise<T>} findOne
- * @property {(condition, attrs, options?) => Promise<T>} findOneAndUpdate
- * @property {(condition, options?) => Promise<T>} findOneAndRemove
- */
-
-/**
- * @template T
- * @typedef {Object<Function,any>} DB The database connection
- * @property {(name: string, schema) => Model<T>} model
- */
-
 let documentStore = [];
 
 const create = (documents) => {
@@ -70,16 +54,30 @@ const findOneAndRemove = (query) => {
   return Promise.resolve(foundDocument);
 };
 
-
-const model = (name, schema) => ({
+/**
+ * @template T
+ * @param {string} name
+ * @param {*} [sch]
+ * @returns {import('model').Model<T>}
+ */
+const model = (name, sch) => ({
   create, find, findOne, findOneAndRemove, findOneAndUpdate,
 });
 
 /**
  * Factory function that creates an in-memory data store
- * @template T
- * @returns {DB<any>}
+ * @returns {object}
  */
 const makeFakeDB = () => ({ model });
 
+/**
+ * Factory function that creates a model using an in-memory fake DB
+ * @template T
+ * @param {string} name
+ * @param {*} [schema]
+ * @returns {import('model').Model<T>}
+ */
+const makeFakeModel = (name, schema) => model(name, schema);
+
 export default makeFakeDB;
+export { makeFakeModel };
