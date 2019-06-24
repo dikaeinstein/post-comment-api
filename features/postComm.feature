@@ -1,4 +1,4 @@
-Feature: API root endpoint
+Feature: As a user, when I call the API root endpoint, I should get a welcome message.
 
   Scenario: Returns a welcome message
     When I send a GET request to api root endpoint
