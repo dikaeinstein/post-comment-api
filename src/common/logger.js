@@ -11,7 +11,9 @@ import pino from 'pino';
  */
 const initializeLogger = ({ config, name, level }) => {
   const isDevelopment = config.NODE_ENV === 'development';
+  const isNonTest = !['testing', 'test'].includes(config.NODE_ENV.toLowerCase());
   return pino({
+    enabled: isNonTest,
     name,
     level,
     useLevelLabels: !isDevelopment,
