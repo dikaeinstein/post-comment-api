@@ -16,7 +16,8 @@
       "request": "launch",
       "name": "Debug Jest Test",
       "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
-      "args": ["--runInBand", "--no-cache"]
+      "args": ["--runInBand", "--no-cache"],
+      "console": "integratedTerminal",
     }
   ]
 }
