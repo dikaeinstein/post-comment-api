@@ -3,7 +3,7 @@
  * @param {object} params
  * @param {import('src/common/utils/id').Id} params.Id
  * @param {(text: string) => string} params.md5
- * @param {import('common').SchemaBuilder} params.schemaBuilder
+ * @param {import('@hapi/joi')} params.schemaBuilder
  * @param {import('src/common/utils/source').MakeSource} params.makeSource
  * @param {(message: string) => Error} params.makeUnProcessableEntityError
  * @returns {(post: import('post').Post) => import('post').PostEntity}
@@ -12,16 +12,16 @@ const buildMakePost = ({
   Id, md5, makeSource, schemaBuilder, makeUnProcessableEntityError,
 }) => (post) => {
   const schema = schemaBuilder.object({
-    author: schemaBuilder.string().min(2).required().error(errors => errors
-      .map((err) => {
-        if (err.type === 'string.min') {
-          return {
-            ...err,
-            message: "Post author's name must be longer than 2 characters.",
-          };
-        }
-        return { ...err, message: 'Post must have an author.' };
-      })),
+    author: schemaBuilder.string().min(2).required().error((errors) => {
+      // @ts-ignore
+      const minError = errors.find(err => err.code === 'string.min');
+      if (minError) {
+        return new Error(
+          "Post author's name must be longer than 2 characters.",
+        );
+      }
+      return new Error('Post must have an author.');
+    }),
     source: schemaBuilder.object().required()
       .error(new Error('Post must have a source.')),
     text: schemaBuilder.string().min(1).required()
@@ -40,9 +40,9 @@ const buildMakePost = ({
     title,
   } = post;
 
-  const result = schemaBuilder.validate({
+  const result = schema.validate({
     author, source, text, title,
-  }, schema);
+  });
 
   if (result.error) {
     throw makeUnProcessableEntityError(result.error.message);

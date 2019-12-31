@@ -1,7 +1,7 @@
 /**
  * buildIsValidIP is a factory function that creates the isValidIP function
  * @param {object} params
- * @param {import('joi')} params.schemaBuilder
+ * @param {import('@hapi/joi')} params.schemaBuilder
  * @returns {(ip: string) => boolean}
  */
 const buildIsValidIP = ({ schemaBuilder }) => (ip) => {
@@ -13,7 +13,7 @@ const buildIsValidIP = ({ schemaBuilder }) => (ip) => {
     ],
   }).required();
 
-  const result = schemaBuilder.validate(ip, IPSchema);
+  const result = IPSchema.validate(ip);
 
   if (result.error) {
     return false;
