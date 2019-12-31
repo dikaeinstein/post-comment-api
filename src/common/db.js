@@ -33,6 +33,7 @@ const connectToDatabase = (connectionUrl) => {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
+    useUnifiedTopology: true,
   };
 
   return mongoose.createConnection(connectionUrl, options);
