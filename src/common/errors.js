@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import assert, { AssertionError } from 'assert';
 
 
@@ -9,13 +10,13 @@ export class BadRequestError extends Error {}
  * Factory function to create an UnProcessableEntityError
  * @param {string} message
  */
-const makeUnProcessableEntityError = message => new UnProcessableEntityError(message);
+const makeUnProcessableEntityError = (message) => new UnProcessableEntityError(message);
 
 /**
  * Factory function to create an DocumentNotFoundError
  * @param {string} message
  */
-const makeDocumentNotFoundError = message => new DocumentNotFoundError(message);
+const makeDocumentNotFoundError = (message) => new DocumentNotFoundError(message);
 
 const ErrorTypes = {
   AssertionError,
@@ -30,7 +31,7 @@ const ErrorTypes = {
  * @returns {boolean}
  */
 const isInstance = (err, errTypeName) => {
-  const errType = Object.keys(ErrorTypes).find(types => types === errTypeName);
+  const errType = Object.keys(ErrorTypes).find((types) => types === errTypeName);
   assert(errType, 'Unsupported error type name.');
 
   return err instanceof ErrorTypes[errType];
