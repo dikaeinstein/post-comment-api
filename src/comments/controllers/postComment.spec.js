@@ -9,7 +9,7 @@ import makePostComment from './postComment';
 describe('postComment controller', () => {
   it('successfully posts a comment', async () => {
     const comment = makeFakeComment();
-    const addComment = commentInfo => Promise.resolve(commentInfo);
+    const addComment = (commentInfo) => Promise.resolve(commentInfo);
     const postComment = makePostComment({ addComment });
     const response = /** @type {Response} */ (await postComment({
       headers: {

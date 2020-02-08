@@ -10,19 +10,15 @@ import HttpStatuses from 'http-status-codes';
 const makeGetPost = ({ getSinglePost }) => async (httpRequest) => {
   const headers = { 'Content-Type': 'application/json' };
 
-  try {
-    const { id } = httpRequest.params;
+  const { id } = httpRequest.params;
 
-    const post = await getSinglePost(id);
+  const post = await getSinglePost(id);
 
-    return {
-      headers,
-      statusCode: HttpStatuses.OK,
-      body: { post },
-    };
-  } catch (error) {
-    throw error;
-  }
+  return {
+    headers,
+    statusCode: HttpStatuses.OK,
+    body: { post },
+  };
 };
 
 export default makeGetPost;

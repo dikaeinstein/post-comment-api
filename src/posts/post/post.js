@@ -14,7 +14,7 @@ const buildMakePost = ({
   const schema = schemaBuilder.object({
     author: schemaBuilder.string().min(2).required().error((errors) => {
       // @ts-ignore
-      const minError = errors.find(err => err.code === 'string.min');
+      const minError = errors.find((err) => err.code === 'string.min');
       if (minError) {
         return new Error(
           "Post author's name must be longer than 2 characters.",

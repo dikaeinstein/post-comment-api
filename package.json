@@ -8,7 +8,7 @@
     "clean": "rm -rf dist",
     "debug": "babel-node --inspect-brk src/bin/www.js",
     "dev": "babel-node src/bin/www.js",
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint 'src/**/*'",
     "prebuild": "yarn clean",
     "start": "node dist/bin/www.js",
     "test": "jest --runInBand --coverage",

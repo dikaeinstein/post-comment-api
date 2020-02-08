@@ -7,7 +7,7 @@ import makePatchComment from './patchComment';
 describe('patchComment Controller', () => {
   it('successfully patches a comment', async () => {
     const fakeComment = makeFakeComment();
-    const editCommentStub = c => Promise.resolve(c);
+    const editCommentStub = (c) => Promise.resolve(c);
     const patchComment = makePatchComment({ editComment: editCommentStub });
     const request = {
       headers: {

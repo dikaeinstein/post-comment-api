@@ -8,8 +8,8 @@ const justMyCode = (stackString) => {
 
   return stackString
     .split(/(\r|\n)/g)
-    .map(line => line.trim())
-    .filter(line => line && !line.match(/\/node_modules\//i))
+    .map((line) => line.trim())
+    .filter((line) => line && !line.match(/\/node_modules\//i))
     .join('\n');
 };
 

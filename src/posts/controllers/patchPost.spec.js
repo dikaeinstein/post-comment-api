@@ -7,7 +7,7 @@ import makePatchPost from './patchPost';
 describe('patchPost Controller', () => {
   it('successfully patches a post', async () => {
     const fakePost = makeFakePost();
-    const editPostStub = p => Promise.resolve(p);
+    const editPostStub = (p) => Promise.resolve(p);
     const patchPost = makePatchPost({ editPost: editPostStub });
     const request = {
       headers: {

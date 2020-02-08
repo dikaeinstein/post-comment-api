@@ -9,7 +9,7 @@ import makePostPost from './postPost';
 describe('postPost controller', () => {
   it('successfully posts a post', async () => {
     const post = makeFakePost();
-    const addPostStub = postInfo => Promise.resolve(postInfo);
+    const addPostStub = (postInfo) => Promise.resolve(postInfo);
     const postPost = makePostPost({ addPost: addPostStub });
     const response = /** @type {Response} */ (await postPost({
       headers: {

@@ -9,17 +9,13 @@ import HttpStatus from 'http-status-codes';
 const makeGetComments = ({ listComments }) => async (httpRequest) => {
   const headers = { 'Content-Type': 'application/json' };
 
-  try {
-    const comments = await listComments(httpRequest.query.postId);
+  const comments = await listComments(httpRequest.query.postId);
 
-    return {
-      headers,
-      statusCode: HttpStatus.OK,
-      body: { comments },
-    };
-  } catch (err) {
-    throw err;
-  }
+  return {
+    headers,
+    statusCode: HttpStatus.OK,
+    body: { comments },
+  };
 };
 
 export default makeGetComments;

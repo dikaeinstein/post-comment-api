@@ -6,7 +6,7 @@ import crypto from 'crypto';
  * @param {string} text
  * @returns {string}
  */
-const md5 = text => crypto
+const md5 = (text) => crypto
   .createHash('md5')
   .update(text, 'utf8')
   .digest('hex');

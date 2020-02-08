@@ -8,29 +8,25 @@ import HttpStatus from 'http-status-codes';
  * @returns {import('comment').PostComment}
  */
 const makePostComment = ({ addComment }) => async (httpRequest) => {
-  try {
-    const { ...commentInfo } = httpRequest.body;
-    const source = {};
-    source.ip = httpRequest.ip;
-    source.browser = httpRequest.headers['User-Agent'];
+  const { ...commentInfo } = httpRequest.body;
+  const source = {};
+  source.ip = httpRequest.ip;
+  source.browser = httpRequest.headers['User-Agent'];
 
-    if (httpRequest.headers.Referer) {
-      source.referer = httpRequest.headers.Referer;
-    }
-
-    const posted = await addComment({ ...commentInfo, source });
-
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-        'Last-Modified': new Date(posted.modifiedOn).toUTCString(),
-      },
-      statusCode: HttpStatus.CREATED,
-      body: { posted },
-    };
-  } catch (err) {
-    throw err;
+  if (httpRequest.headers.Referer) {
+    source.referer = httpRequest.headers.Referer;
   }
+
+  const posted = await addComment({ ...commentInfo, source });
+
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      'Last-Modified': new Date(posted.modifiedOn).toUTCString(),
+    },
+    statusCode: HttpStatus.CREATED,
+    body: { posted },
+  };
 };
 
 export default makePostComment;

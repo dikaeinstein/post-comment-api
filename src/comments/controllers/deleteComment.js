@@ -7,18 +7,14 @@ import HttpStatus from 'http-status-codes';
  * @returns {import('comment').DeleteComment}
  */
 const makeDeleteComment = ({ removeComment }) => async (httpRequest) => {
-  try {
-    const { id } = httpRequest.params;
+  const { id } = httpRequest.params;
 
-    const deleted = await removeComment(id);
-    return {
-      headers: { 'Content-Type': 'Application/json' },
-      statusCode: HttpStatus.OK,
-      body: { deleted },
-    };
-  } catch (error) {
-    throw error;
-  }
+  const deleted = await removeComment(id);
+  return {
+    headers: { 'Content-Type': 'Application/json' },
+    statusCode: HttpStatus.OK,
+    body: { deleted },
+  };
 };
 
 export default makeDeleteComment;

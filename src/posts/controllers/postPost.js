@@ -14,29 +14,25 @@ import HttpStatus from 'http-status-codes';
  * @returns {PostPost}
  */
 const makePostPost = ({ addPost }) => async (httpRequest) => {
-  try {
-    const { ...postInfo } = httpRequest.body;
-    const source = {};
-    source.ip = httpRequest.ip;
-    source.browser = httpRequest.headers['User-Agent'];
+  const { ...postInfo } = httpRequest.body;
+  const source = {};
+  source.ip = httpRequest.ip;
+  source.browser = httpRequest.headers['User-Agent'];
 
-    if (httpRequest.headers.Referer) {
-      source.referer = httpRequest.headers.Referer;
-    }
-
-    const posted = await addPost({ ...postInfo, source });
-
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-        'Last-Modified': new Date(posted.modifiedOn).toUTCString(),
-      },
-      statusCode: HttpStatus.CREATED,
-      body: { posted },
-    };
-  } catch (err) {
-    throw err;
+  if (httpRequest.headers.Referer) {
+    source.referer = httpRequest.headers.Referer;
   }
+
+  const posted = await addPost({ ...postInfo, source });
+
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      'Last-Modified': new Date(posted.modifiedOn).toUTCString(),
+    },
+    statusCode: HttpStatus.CREATED,
+    body: { posted },
+  };
 };
 
 export default makePostPost;
